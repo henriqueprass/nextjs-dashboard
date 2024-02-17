@@ -6,6 +6,9 @@ import {
 } from '@heroicons/react/24/outline';
 import { lusitana } from '@/app/ui/fonts';
 
+/* 1. Then, move into the file /app/ui/dashboard/cards.tsx, import the fetchCardData() function, */
+import { fetchCardData } from '@/app/lib/data';
+
 const iconMap = {
   collected: BanknotesIcon,
   customers: UserGroupIcon,
@@ -14,18 +17,28 @@ const iconMap = {
 };
 
 export default async function CardWrapper() {
+  /* 2. and invoke it inside the <CardWrapper/> component */
+  const {
+    numberOfInvoices,
+    numberOfCustomers,
+    totalPaidInvoices,
+    totalPendingInvoices,
+  } = await fetchCardData();
+
   return (
     <>
       {/* NOTE: comment in this code when you get to this point in the course */}
 
-      {/* <Card title="Collected" value={totalPaidInvoices} type="collected" />
+      {/* 3. Make sure to uncomment any necessary code in this component */}
+      <Card title="Collected" value={totalPaidInvoices} type="collected" />
       <Card title="Pending" value={totalPendingInvoices} type="pending" />
       <Card title="Total Invoices" value={numberOfInvoices} type="invoices" />
       <Card
         title="Total Customers"
         value={numberOfCustomers}
         type="customers"
-      /> */}
+      />
+      {/* 3. Make sure to uncomment any necessary code in this component (FIM) */}
     </>
   );
 }

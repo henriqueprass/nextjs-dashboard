@@ -1,3 +1,6 @@
+/* 3. Inserir */
+'use client';
+
 import { lusitana } from '@/app/ui/fonts';
 import {
   AtSymbolIcon,
@@ -6,10 +9,20 @@ import {
 } from '@heroicons/react/24/outline';
 import { ArrowRightIcon } from '@heroicons/react/20/solid';
 import { Button } from './button';
+/* 4. Importar */
+import { useFormState, useFormStatus } from 'react-dom';
+import { authenticate } from '@/app/lib/actions';
+/* 4. (FIM) */
 
 export default function LoginForm() {
+  /* 1. Finally, in your login-form.tsx component, you can use React's useFormState to call the server action and handle form errors, */
+  const [errorMessage, dispatch] = useFormState(authenticate, undefined);
+
   return (
-    <form className="space-y-3">
+    /* 5. Inseir o atributo "action={dispatch}"" no form */
+    //<form className="space-y-3"> // Substituído
+    <form action={dispatch} className="space-y-3">
+      {/* 5. (FIM) */}
       <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
         <h1 className={`${lusitana.className} mb-3 text-2xl`}>
           Please log in to continue.
@@ -56,8 +69,19 @@ export default function LoginForm() {
           </div>
         </div>
         <LoginButton />
-        <div className="flex h-8 items-end space-x-1">
+        {/* 6. Substituir */}
+        {/* <div className="flex h-8 items-end space-x-1"> // Substituído */}
+        <div className="flex h-8 items-end space-x-1" aria-live="polite" aria-atomic="true">
+          {/* 6. (FIM) */}
           {/* Add form errors here */}
+          {/* 7. Inserir */}
+          {errorMessage && (
+            <>
+              <ExclamationCircleIcon className="h-5 w-5 text-red-500" />
+              <p className="text-sm text-red-500">{errorMessage}</p>
+            </>
+          )}
+          {/* 7. (FIM) */}
         </div>
       </div>
     </form>
@@ -65,8 +89,14 @@ export default function LoginForm() {
 }
 
 function LoginButton() {
+  /* 2.  and use useFormStatus to handle the pending state of the form: */
+  const { pending } = useFormStatus();
+
   return (
-    <Button className="mt-4 w-full">
+    /* 8. Adicionar o atributo "aria-disabled={pending}" ao Button */
+    //<Button className="mt-4 w-full"> // Substituído
+    <Button className="mt-4 w-full" aria-disabled={pending}>
+      {/* 8. (FIM) */}
       Log in <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
     </Button>
   );

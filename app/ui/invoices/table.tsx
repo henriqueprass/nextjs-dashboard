@@ -31,6 +31,7 @@ export default async function InvoicesTable({
                         className="mr-2 rounded-full"
                         width={28}
                         height={28}
+                        /* 1. Colocar o atributo alt de volta */
                         alt={`${invoice.name}'s profile picture`}
                       />
                       <p>{invoice.name}</p>

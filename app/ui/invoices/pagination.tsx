@@ -4,17 +4,36 @@ import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { generatePagination } from '@/app/lib/utils';
+/* 1. Navigate to the <Pagination/> component and import the usePathname and useSearchParams hooks. */
+import { usePathname, useSearchParams } from 'next/navigation';
 
 export default function Pagination({ totalPages }: { totalPages: number }) {
+  /* 2. We will use this to get the current page and set the new page. */
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const currentPage = Number(searchParams.get('page')) || 1;
+  /* 2. (FIM) */
+
+  /* 5. Next, create a new function inside the <Pagination> Component called createPageURL. Similarly to the search, you'll use URLSearchParams to set the new page number, and pathName to create the URL string. */
+  const createPageURL = (pageNumber: number | string) => {
+    const params = new URLSearchParams(searchParams);
+    params.set('page', pageNumber.toString());
+    return `${pathname}?${params.toString()}`;
+  };
+  /* 5. (FIM) */
+
   // NOTE: comment in this code when you get to this point in the course
 
-  // const allPages = generatePagination(currentPage, totalPages);
+  /* 3. Make sure to also uncomment the code in this component. Your application will break temporarily as you haven't implemented the <Pagination/> logic yet. Let's do that now!
+  Descomentar */
+  const allPages = generatePagination(currentPage, totalPages);
 
   return (
     <>
       {/* NOTE: comment in this code when you get to this point in the course */}
 
-      {/* <div className="inline-flex">
+      {/* 4. Descomentar */}
+      <div className="inline-flex">
         <PaginationArrow
           direction="left"
           href={createPageURL(currentPage - 1)}
@@ -47,7 +66,8 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
           href={createPageURL(currentPage + 1)}
           isDisabled={currentPage >= totalPages}
         />
-      </div> */}
+      </div>
+      {/* 4. (FIM) */}
     </>
   );
 }
